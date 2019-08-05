@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import apolloClient from "./services/apollo";
+import { ApolloProvider } from "react-apollo";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Orcamentos from "./pages/Orcamentos";
+import OrcamentoDetalhe from "./pages/OrcamentoDetalhe";
+import Home from "./pages/Home";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+      <ApolloProvider client={apolloClient}>
+        <Router>
+          <Navbar />
+          <hr />
+          <section className="uk-section">
+            <div className="uk-container">
+              <Route path="/" exact component={Home} />
+              <Route path="/orcamentos" exact component={Orcamentos} />
+              <Route path="/orcamentos/:id" component={OrcamentoDetalhe} />
+            </div>
+          </section>
+        </Router>
+      </ApolloProvider>
+    );
+  }
 }
 
 export default App;
